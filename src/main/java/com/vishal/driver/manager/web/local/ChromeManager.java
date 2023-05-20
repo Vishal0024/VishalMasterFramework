@@ -13,7 +13,6 @@ public final class ChromeManager {
         WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
         ops.addArguments("--remote-allow-origins=*");
-        WebDriver dr =  new ChromeDriver(ops);
-        return dr;
+        return new ChromeDriver(ops);
     }
 }

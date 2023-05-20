@@ -3,6 +3,7 @@ package com.vishal.config;
 import com.vishal.config.convertors.*;
 import com.vishal.enums.BrowserTypes;
 import com.vishal.enums.RemoteMode;
+import com.vishal.enums.RemoteModeMobile;
 import com.vishal.enums.RunMode;
 import org.aeonbits.owner.Config;
 
@@ -12,9 +13,17 @@ import java.net.URL;
 @Config.Sources({
         "system:properties",
         "system:env",
-        "file:${user.dir}/src/test/java/resources/config.properties"
+        "file:${user.dir}/src/test/java/resources/config.properties",
+        "file:${user.dir}/src/test/java/resources/staging-config.properties",
+        "file:${user.dir}/src/test/java/resources/dev-config.properties"
 })
 public interface FrameworkConfig extends Config {
+
+    @DefaultValue("staging")
+    String environment();
+
+    @Key("${environment}.webUrl")
+    String webUrl();
 
     @DefaultValue("CHROME")
     @ConverterClass(StringToBrowserTypeConvertor.class)
@@ -34,7 +43,7 @@ public interface FrameworkConfig extends Config {
 
     @Key("remoteModeMobile")
     @ConverterClass(StringToRemoteModeMobileConvertor.class)
-    RemoteMode remoteModeMobile();
+    RemoteModeMobile remoteModeMobile();
 
     @ConverterClass(StringToURLConvertor.class)
     URL seleniumGridUrl();
